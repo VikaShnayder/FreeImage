@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">FreeImage</string>
-    <string-array name="splitColor">
+
+    <string name="color">Color: </string>
+    <string-array name="split_color">
+        <item name="all">all</item>
         <item name="black">black</item>
         <item name="white">white</item>
         <item name="red">red</item>
@@ -15,5 +18,66 @@
         <item name="turquoise">turquoise</item>
     </string-array>
 
+    <string name="type">Type resource: </string>
+    <string-array name="split_type">
+        <item name="all">all</item>
+        <item name="photo">photo</item>
+        <item name="illustration">illustration</item>
+        <item name="vectors">vectors</item>
+    </string-array>
 
+    <string name="lang">Lang: </string>
+    <string-array name="split_lang">
+        <item namw="en">en</item>
+        <item namw="ru">ru</item>
+    </string-array>
+
+    <string name="orientation">Orientation: </string>
+    <string-array name="split_orientation">
+        <item namw="all">all</item>
+        <item namw="horizontal">horizontal</item>
+        <item name="vertical">vertical</item>
+    </string-array>
+
+    <string name="category">Category: </string>
+    <string-array name="split_category">
+        <item name="all">all</item>
+        <item>backgrounds</item>
+        <item>fashion</item>
+        <item>nature</item>
+        <item>science</item>
+        <item>education</item>
+        <item>feelings</item>
+        <item>health</item>
+        <item>people</item>
+        <item>religion</item>
+        <item>places</item>
+        <item>animals</item>
+        <item>industry</item>
+        <item>computer</item>
+        <item>food</item>
+        <item>sports</item>
+        <item>transportation</item>
+        <item>travel</item>
+        <item>buildings</item>
+        <item>business</item>
+        <item>music</item>
+    </string-array>
+
+    <string name="order">Order: </string>
+    <string-array name="split_order">
+        <item name="popular">popular</item>
+        <item nane="latest">latest</item>
+    </string-array>
+
+    <string name="tag">Tag: </string>
+    <string name="user_name">User name</string>
+
+
+    <string name="likes">likes</string>
+    <string name="downloads">downloads</string>
+    <string name="views">views</string>
+    <string name="comments">comments</string>
+
+    <string name="none">none</string>
 </resources>

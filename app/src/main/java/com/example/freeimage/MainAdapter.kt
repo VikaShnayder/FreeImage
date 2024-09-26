@@ -28,8 +28,8 @@ class MainAdapter(var images: List<Image>, var listener: MainActivity.RecyclerIt
         val image = images[position]
         Log.d("MainAdapter", "Binding image at position $position: $image")
 
-        holder.userName.text = image.user
-        holder.tags.text = image.tags
+//        holder.userName.text = image.user
+//        holder.tags.text = image.tags
 
         if (image.previewURL.isEmpty()) {
             holder.imageView.setImageDrawable(context.getDrawable(R.drawable.baseline_image_24))
@@ -39,13 +39,13 @@ class MainAdapter(var images: List<Image>, var listener: MainActivity.RecyclerIt
                 .into(holder.imageView)
         }
 
-        if (image.userImageURL.isEmpty()) {
-            holder.userImage.setImageDrawable(context.getDrawable(R.drawable.baseline_image_24))
-        } else {
-            Glide.with(context)
-                .load(image.userImageURL)
-                .into(holder.userImage)
-        }
+//        if (image.userImageURL.isEmpty()) {
+//            holder.userImage.setImageDrawable(context.getDrawable(R.drawable.baseline_image_24))
+//        } else {
+//            Glide.with(context)
+//                .load(image.userImageURL)
+//                .into(holder.userImage)
+//        }
     }
 
 
@@ -58,9 +58,9 @@ class MainAdapter(var images: List<Image>, var listener: MainActivity.RecyclerIt
 
     inner class MainHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imageView: ImageView = view.findViewById(R.id.image_view)
-        var userImage: ImageView = view.findViewById(R.id.user_image)
-        var userName: TextView = view.findViewById(R.id.user_name)
-        var tags: TextView = view.findViewById(R.id.tags)
+//        var userImage: ImageView = view.findViewById(R.id.user_image)
+//        var userName: TextView = view.findViewById(R.id.user_name)
+//        var tags: TextView = view.findViewById(R.id.tags)
 
         init {
             view.setOnClickListener { v: View ->

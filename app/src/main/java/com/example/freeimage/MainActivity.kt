@@ -7,10 +7,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.room.ColumnInfo
 import com.example.freeimage.retrofit.ClientApi
 import com.example.freeimage.retrofit.Image
 import kotlinx.coroutines.CoroutineScope
@@ -27,20 +31,37 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MainAdapter
-    private lateinit var spinner: Spinner
-    private lateinit var search_color: ImageView
+
+
+    private lateinit var spinnerOrder: Spinner
+    private lateinit var spinnerColor: Spinner
+    private lateinit var spinnerType: Spinner
+    private lateinit var spinnerLang: Spinner
+    private lateinit var spinnerCategory: Spinner
+    private lateinit var spinnerOrientation: Spinner
+    private lateinit var editTextTag: EditText
+    private lateinit var imageViewSearch: ImageView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView = findViewById(R.id.images_recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        spinner = findViewById(R.id.spinner)
-        search_color = findViewById(R.id.search_color)
+        //recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
+        spinnerColor = findViewById(R.id.spinner_color)
+        spinnerOrder = findViewById(R.id.spinner_order)
+        spinnerType = findViewById(R.id.spinner_type)
+        spinnerLang = findViewById(R.id.spinner_lang)
+        spinnerCategory = findViewById(R.id.spinner_category)
+        spinnerOrientation = findViewById(R.id.spinner_orientation)
+        editTextTag = findViewById(R.id.edit_text_tag)
+        imageViewSearch = findViewById(R.id.search)
         updateImagesList()
 
-        search_color.setOnClickListener(){
+        imageViewSearch.setOnClickListener(){
             updateImagesList()
         }
 
@@ -55,10 +76,17 @@ class MainActivity : AppCompatActivity() {
             val images = adapter.getItemAtPosition(position)
             val intent = Intent(this@MainActivity, FullImageActivity::class.java)
             intent.putExtra(EXTRA_PREWIEWURL, images.previewURL)
-            intent.putExtra(EXTRA_TAGS, images.tags)
             intent.putExtra(EXTRA_USER, images.user)
             intent.putExtra(EXTRA_USERIMAGEURL, images.userImageURL)
+            intent.putExtra("tags", images.tags)
+            intent.putExtra(EXTRA_LIKES, images.likes.toString())
+            intent.putExtra(EXTRA_DOWNLOADS, images.downloads.toString())
+            intent.putExtra(EXTRA_COMMENTS, images.comments)
+            intent.putExtra(EXTRA_VIEWS, images.views)
+            intent.putExtra(EXTRA_TYPE, images.type)
+
             startActivityForResult(intent, EDIT_TASK_ACTIVITY_REQUEST_CODE)
+
         }
     }
     interface RecyclerItemListener {
@@ -69,6 +97,11 @@ class MainActivity : AppCompatActivity() {
         val EXTRA_TAGS = "MainActivity.EXTRA_TAGS"
         val EXTRA_USER = "MainActivity.EXTRA_USER"
         val EXTRA_USERIMAGEURL = "MainActivity.EXTRA_USERIMAGEURL"
+        val EXTRA_LIKES  = "MainActivity.EXTRA_LIKES"
+        val EXTRA_DOWNLOADS = "MainActivity.EXTRA_DOWNLOADS"
+        val EXTRA_COMMENTS = "MainActivity.EXTRA_COMMENTS"
+        val EXTRA_VIEWS = "MainActivity.EXTRA_VIEWS"
+        val EXTRA_TYPE = "MainActivity.EXTRA_TYPE"
 
         const val EDIT_TASK_ACTIVITY_REQUEST_CODE = 1
     }
@@ -90,9 +123,24 @@ class MainActivity : AppCompatActivity() {
 
     fun updateImagesList() {
 
+        //тут поиск по параметрам --------------------------------------------------------------------------------
+        /*
+                val imageResponse = clientApi.getImageByParametrs(
+                    API_KEY,
+                    30,
+                    1,
+                    spinnerColor.selectedItem.toString(),
+                    "",
+                    spinnerLang.selectedItem.toString(),
+                    spinnerType.selectedItem.toString(),
+                    spinnerOrientation.selectedItem.toString(),
+                    spinnerCategory.selectedItem.toString(),
+                    spinnerOrder.selectedItem.toString())
+                */
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                val imageResponse = clientApi.getImageByColors(API_KEY,spinner.selectedItem.toString())
+
+                val imageResponse = clientApi.getImageByColor(API_KEY, spinnerColor.selectedItem.toString(),50,1)
                 Log.d(TAG, "11111Request URL: ${imageResponse}")
 
                 runOnUiThread {
@@ -112,10 +160,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Response received: $imageResponse")
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching images", e)
+                //Toast.makeText(applicationContext, "Error fetching images", Toast.LENGTH_SHORT).show()
             }
             Log.d(TAG, "Request URL: ${retrofit.baseUrl()}?key=$API_KEY")
         }
     }
-
-
 }

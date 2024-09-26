@@ -6,40 +6,232 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="15dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/block_search"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        android:elevation="5dp"
+        android:layout_margin="10dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            android:padding ="5dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order"
+                android:paddingRight="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+
+            <Spinner
+                android:id="@+id/spinner_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_order"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_order"
+            tools:ignore="MissingConstraints"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="@string/color"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+
+            <Spinner
+                android:id="@+id/spinner_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_color"
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="@string/type"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+
+            <Spinner
+                android:id="@+id/spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_type" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_lang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_type"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tag"
+                android:paddingRight="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_type"
+            tools:ignore="MissingConstraints">
+            <Spinner
+                android:id="@+id/spinner_lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_lang" />
+            <EditText
+                android:id="@+id/edit_text_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="enter tag"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/gray"
+                android:textSize="14dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_tag"
+            tools:ignore="MissingConstraints"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="@string/category"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_category"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout_orientation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_category"
+            tools:ignore="MissingConstraints"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:text="@string/orientation"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+
+            <Spinner
+                android:id="@+id/spinner_orientation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/split_orientation" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/liner_layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_orientation"
+            tools:ignore="MissingConstraints"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/baseline_search_24"
+                tools:layout_editor_absoluteX="178dp"
+                tools:layout_editor_absoluteY="186dp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/block_search"
         tools:ignore="MissingConstraints"
-        android:padding ="15dp"
-        android:gravity="center">
+        tools:layout_editor_absoluteX="25dp"
+        >
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images_recyclerView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/splitColor"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            android:paddingTop="10dp"
+            tools:context=".SearchActivity"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="15dp"
+            tools:listitem="@layout/item_image_card_main"
 
-        <ImageView
-            android:id="@+id/search_color"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/baseline_search_24" />
+            />
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/images_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:context=".SearchActivity"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-16dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>
