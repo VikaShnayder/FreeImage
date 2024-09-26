@@ -27,11 +27,10 @@ interface ClientApi {
     @GET("/api/")
     suspend fun getImageByParametrs(
         @Query("key") apikey: String,
-        @Query("per_page") perpage: Int = 30,
+        @Query("per_page") perpage: Int,
         @Query("page") page: Int,
         @Query("colors") color: String,
         @Query("q") q: String,
-        @Query("lang") lang: String,
         @Query("image_type") type: String,
         @Query("orientation") orientation: String,
         @Query("category") category: String,

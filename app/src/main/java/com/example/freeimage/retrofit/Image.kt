@@ -8,6 +8,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Image(
+    @ColumnInfo(name = "pageURL")
+    val pageURL: String,
+
     @ColumnInfo(name = "previewURL")
     val previewURL: String,
     @ColumnInfo(name = "userImageURL")

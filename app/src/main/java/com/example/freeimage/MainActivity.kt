@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.room.ColumnInfo
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.freeimage.retrofit.ClientApi
 import com.example.freeimage.retrofit.Image
 import kotlinx.coroutines.CoroutineScope
@@ -32,15 +33,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MainAdapter
 
-
     private lateinit var spinnerOrder: Spinner
     private lateinit var spinnerColor: Spinner
     private lateinit var spinnerType: Spinner
-    private lateinit var spinnerLang: Spinner
     private lateinit var spinnerCategory: Spinner
     private lateinit var spinnerOrientation: Spinner
     private lateinit var editTextTag: EditText
     private lateinit var imageViewSearch: ImageView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +54,16 @@ class MainActivity : AppCompatActivity() {
         spinnerColor = findViewById(R.id.spinner_color)
         spinnerOrder = findViewById(R.id.spinner_order)
         spinnerType = findViewById(R.id.spinner_type)
-        spinnerLang = findViewById(R.id.spinner_lang)
         spinnerCategory = findViewById(R.id.spinner_category)
         spinnerOrientation = findViewById(R.id.spinner_orientation)
         editTextTag = findViewById(R.id.edit_text_tag)
         imageViewSearch = findViewById(R.id.search)
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshData()
+        }
+
         updateImagesList()
 
         imageViewSearch.setOnClickListener(){
@@ -66,6 +71,12 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun refreshData() {
+        updateImagesList()
+        swipeRefreshLayout.isRefreshing = false
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateImagesList()
@@ -76,11 +87,12 @@ class MainActivity : AppCompatActivity() {
             val images = adapter.getItemAtPosition(position)
             val intent = Intent(this@MainActivity, FullImageActivity::class.java)
             intent.putExtra(EXTRA_PREWIEWURL, images.previewURL)
+            intent.putExtra(EXTRA_PAGEURL, images.pageURL)
             intent.putExtra(EXTRA_USER, images.user)
             intent.putExtra(EXTRA_USERIMAGEURL, images.userImageURL)
-            intent.putExtra("tags", images.tags)
-            intent.putExtra(EXTRA_LIKES, images.likes.toString())
-            intent.putExtra(EXTRA_DOWNLOADS, images.downloads.toString())
+            intent.putExtra(EXTRA_TAGS, images.tags)
+            intent.putExtra(EXTRA_LIKES, images.likes)
+            intent.putExtra(EXTRA_DOWNLOADS, images.downloads)
             intent.putExtra(EXTRA_COMMENTS, images.comments)
             intent.putExtra(EXTRA_VIEWS, images.views)
             intent.putExtra(EXTRA_TYPE, images.type)
@@ -102,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         val EXTRA_COMMENTS = "MainActivity.EXTRA_COMMENTS"
         val EXTRA_VIEWS = "MainActivity.EXTRA_VIEWS"
         val EXTRA_TYPE = "MainActivity.EXTRA_TYPE"
+        val EXTRA_PAGEURL = "MainActivity.EXTRA_PAGEURL"
 
         const val EDIT_TASK_ACTIVITY_REQUEST_CODE = 1
     }
@@ -122,27 +135,22 @@ class MainActivity : AppCompatActivity() {
     val API_KEY = "44234611-61bd91faec11ec6631f07c268"
 
     fun updateImagesList() {
+        CoroutineScope(Dispatchers.Default).launch {
+            try {
 
-        //тут поиск по параметрам --------------------------------------------------------------------------------
-        /*
+                //val imageResponse = clientApi.getImageByColor(API_KEY, spinnerColor.selectedItem.toString(),50,1)
+                //Log.d(TAG, "11111Request URL: ${imageResponse}")
+
                 val imageResponse = clientApi.getImageByParametrs(
                     API_KEY,
                     30,
                     1,
                     spinnerColor.selectedItem.toString(),
-                    "",
-                    spinnerLang.selectedItem.toString(),
+                    editTextTag.text.toString(),
                     spinnerType.selectedItem.toString(),
                     spinnerOrientation.selectedItem.toString(),
                     spinnerCategory.selectedItem.toString(),
                     spinnerOrder.selectedItem.toString())
-                */
-        CoroutineScope(Dispatchers.Default).launch {
-            try {
-
-                val imageResponse = clientApi.getImageByColor(API_KEY, spinnerColor.selectedItem.toString(),50,1)
-                Log.d(TAG, "11111Request URL: ${imageResponse}")
-
                 runOnUiThread {
                     list = imageResponse.items ?: emptyList()
                     Log.d(TAG, "Number of images received: ${list.size}")

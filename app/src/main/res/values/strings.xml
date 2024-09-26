@@ -19,17 +19,12 @@
     </string-array>
 
     <string name="type">Type resource: </string>
+    <string name="title_search">Advanced search</string>
     <string-array name="split_type">
         <item name="all">all</item>
         <item name="photo">photo</item>
         <item name="illustration">illustration</item>
         <item name="vectors">vectors</item>
-    </string-array>
-
-    <string name="lang">Lang: </string>
-    <string-array name="split_lang">
-        <item namw="en">en</item>
-        <item namw="ru">ru</item>
     </string-array>
 
     <string name="orientation">Orientation: </string>
@@ -73,11 +68,11 @@
     <string name="tag">Tag: </string>
     <string name="user_name">User name</string>
 
-
     <string name="likes">likes</string>
     <string name="downloads">downloads</string>
     <string name="views">views</string>
     <string name="comments">comments</string>
 
     <string name="none">none</string>
+    <string name="link">Link: </string>
 </resources>

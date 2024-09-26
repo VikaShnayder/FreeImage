@@ -9,7 +9,8 @@ data class ImageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
 
-
+    @ColumnInfo(name = "pageURL")
+    val pageURL: String,
     @ColumnInfo(name = "previewURL")
     val previewURL: String,
     @ColumnInfo(name = "userImageURL")

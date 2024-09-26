@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
 import android.net.Uri
+import android.text.util.Linkify
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
@@ -27,6 +28,7 @@ class FullImageActivity : AppCompatActivity() {
     private lateinit var textViewComments: TextView
     private lateinit var textViewTags: TextView
     private lateinit var textViewType: TextView
+    private lateinit var textViewPageURL: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +38,15 @@ class FullImageActivity : AppCompatActivity() {
         val previewURL = intent.getStringExtra(MainActivity.EXTRA_PREWIEWURL) ?: ""
         val user = intent.getStringExtra(MainActivity.EXTRA_USER) ?: ""
         val userImageURL = intent.getStringExtra(MainActivity.EXTRA_USERIMAGEURL) ?: ""
-        val tags = intent.getStringExtra("tags") ?: ""
+        val tags = intent.getStringExtra(MainActivity.EXTRA_TAGS) ?: ""
         val type = intent.getStringExtra(MainActivity.EXTRA_TYPE) ?: ""
         val likes = intent.getStringExtra(MainActivity.EXTRA_LIKES) ?: ""
         val downloads = intent.getStringExtra(MainActivity.EXTRA_DOWNLOADS) ?: ""
         val comments = intent.getStringExtra(MainActivity.EXTRA_COMMENTS) ?: ""
         val views = intent.getStringExtra(MainActivity.EXTRA_VIEWS) ?: ""
+        val pageURL = intent.getStringExtra(MainActivity.EXTRA_PAGEURL) ?: ""
 
         Log.d(TAG, "intent1= ${intent.getStringExtra(MainActivity.EXTRA_PREWIEWURL)}")
-        Log.d(TAG, "intent2= ${intent.getStringExtra(MainActivity.EXTRA_USERIMAGEURL)}")
 
         imageViewPhoto = findViewById(R.id.image_view)
         imageViewUser = findViewById(R.id.user_image)
@@ -55,6 +57,7 @@ class FullImageActivity : AppCompatActivity() {
         textViewTags = findViewById(R.id.tags)
         textViewLikes = findViewById(R.id.number_likes)
         textViewType = findViewById(R.id.type)
+        textViewPageURL = findViewById(R.id.page_url)
 
         try {
             if (previewURL.isEmpty()) {
@@ -78,6 +81,9 @@ class FullImageActivity : AppCompatActivity() {
             textViewComments.setText(comments)
             textViewTags.setText(tags)
             textViewType.setText(type)
+            textViewPageURL.setText(pageURL)
+            Linkify.addLinks(textViewPageURL, Linkify.WEB_URLS)
+
         }catch (e: Exception) {
             Log.e(TAG, "Error getting information for images", e)
         }
